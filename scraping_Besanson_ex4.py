@@ -2,6 +2,12 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
+import codecs
+import datetime
+from time import sleep
+import time 
+from requests.exceptions import ConnectionError
+
 
 #link = raw_input('Enter the link to the review page: ')
 
@@ -29,13 +35,19 @@ pages = int(pages)
 
 #Loop on Reviews
 
-for i in range (1, pages):
+for i in range (1, pages+1):
     
     print "Comment Page " + str(i)
     link= "http://www.amazon.com/King-Candy-Crush-Saga/product-reviews/B00FAPF5U0/ref=cm_cr_pr_viewopt_srt/186-3013144-7244719?ie=UTF8&showViewpoints=1&sortBy=recent&reviewerType=all_reviews&filterByStar=all_stars&pageNumber=" + str(i)
     
     # Get raw HTML
-    response = requests.get(link)
+    try:
+        response = requests.get(link)
+    except ConnectionError:
+        print "Wait"
+        time.sleep(10)
+        response = requests.get(link)
+                
     
     # "Soupify" HTML
     soup = BeautifulSoup(response.content)
@@ -88,7 +100,7 @@ data = pd.DataFrame({'title':titles,'stars':stars, 'author':authors, 'text':text
 data = data[['title', 'author', 'buyer','stars', 'text']] # re-order columns
 
 data = data.replace("\u00A0"," ") # remove non-breaking spaces
+data = data.drop_duplicates() #remove duplicates
 
-data.to_csv('reviews.csv', encoding = 'utf-8', sep = '\t') # for tab-separated csv
-# data.to_csv('reviews.csv', encoding = 'utf-8', sep = ',') # for comma-separated csv
+data.to_csv('reviews_Besanson.csv', encoding = 'utf-8', sep = '\t') # for tab-separated csv
 
