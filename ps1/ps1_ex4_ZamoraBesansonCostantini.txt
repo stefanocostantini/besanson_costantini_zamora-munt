@@ -1,0 +1,31 @@
+Problem Set 1 - Exercise 4
+==========================
+
+Team
+----
+Gaston Besanson
+Stefano Costantini
+Jordi Zamora-Munt
+
+
+Candy Crush Saga reviews
+------------------------
+
+This dataset contains all the reviews (~ 45,000) of the Candy Crush Saga game available from Amazon.com. The script starts from the first page of the reviews:
+
+http://www.amazon.com/King-Candy-Crush-Saga/product-reviews/B00FAPF5U0/ \
+ref=cm_cr_pr_btm_link_1?ie=UTF8&showViewpoints=1&sortBy=helpful& \
+reviewerType=all_reviews&filterByStar=all_stars&pageNumber=1
+
+it identifies the total number of pages (at the bottom of the first page) and then proceeds to go through them to extract all the reviews (there are 10 reviews per page). For each review, the script extracts the following fields:
+
+- title: the title of the review
+- author: the author of the review (username)
+- idRev: the unique ID of the review
+- stars: the number of stars given
+- date: the date of the review
+- types: whether it's a review from a 'verified purchase' or not
+- text: the text of the review
+
+
+
